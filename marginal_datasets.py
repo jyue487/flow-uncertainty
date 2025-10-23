@@ -625,7 +625,6 @@ def plot_dataset_overview(X, mu, S_true, alpha=0.9, n_show=20, ellipse_stride=1,
         n_show: Number of trajectories to display
         ellipse_stride: Draw ellipse every N timesteps
     """
-    print("New one")
     T = X.shape[1]
     n_samples = X.shape[0]
     n_show = min(n_show, n_samples)

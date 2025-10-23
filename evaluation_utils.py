@@ -619,7 +619,6 @@ def plot_distribution_evaluation(
         figsize: Figure size
     """
     alpha = results.get('alpha', 0.95)
-    cov_per_tube = results['cov_per_tube']
     nll_per_tube = results['nll_per_tube']
     has_sharpness = 'rs_mean' in results
 
@@ -631,9 +630,7 @@ def plot_distribution_evaluation(
 
     # Left: Coverage histogram
     ax = axes[0]
-    ax.hist(100 * cov_per_tube, bins=20, alpha=0.7, color='C0', edgecolor='black')
     ax.axvline(100 * results['cov_mean'], color='red', linestyle='--', linewidth=2, label=f"Mean: {100*results['cov_mean']:.2f}%")
-    ax.axvline(100 * results['cov_max'], color='green', linestyle='--', linewidth=2, label=f"Max: {100*results['cov_max']:.2f}%")
     ax.axvline(100 * alpha, color='gray', linestyle=':', linewidth=2, label=f"Nominal: {100*alpha:.0f}%")
     ax.set_xlabel('Coverage (%)', fontsize=11)
     ax.set_ylabel('Number of tubes', fontsize=11)
@@ -792,7 +789,7 @@ def evaluate_risk_size_curve(
     s_table: np.ndarray,
     gamma_vec: np.ndarray,
     alphas: np.ndarray,
-    N_tubes: int = 50,
+    N_scenes: int = 50,
     whiten: bool = False,
     W_VEC: Optional[np.ndarray] = None,
     precision_ridge: float = 1e-7,
@@ -818,7 +815,7 @@ def evaluate_risk_size_curve(
         s_table: [T, n_alphas] per-horizon calibration scales
         gamma_vec: [n_alphas] path multipliers
         alphas: [n_alphas] alpha levels to evaluate
-        N_tubes: Number of tubes to generate per alpha
+        N_scenes: Number of tubes to generate per alpha
         whiten: Whether whitening is used
         W_VEC: Whitening vector
         precision_ridge: Ridge parameter
@@ -858,7 +855,7 @@ def evaluate_risk_size_curve(
             X_train=X_train,
             X_test=X_test,
             T=T,
-            N_tubes=N_tubes,
+            N_SCENES=N_scenes,
             alpha=alpha,
             whiten=whiten,
             W_VEC=W_VEC,
